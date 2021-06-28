@@ -62,7 +62,7 @@ require('./routes/sotero_back/index')( api, db, uri, dbopt, rqt)
 app.use('/api', api)
 
 
-server.listen(4041, ()=>{
+server.listen(3000, ()=>{
   db.connect(uri, {useNewUrlParser: true}, (error, client) =>{
     if(error){
       throw error;
