@@ -3,7 +3,6 @@ const jsonwebtoken = require('jsonwebtoken')
 const jwt = require('express-jwt')
 
 module.exports = (api, db, uri, dbopt, rqt) => {
-    // [POST] /auth
     api.post('/auth', async function (req, res) {
         try {
 
@@ -14,7 +13,7 @@ module.exports = (api, db, uri, dbopt, rqt) => {
 
             //Entrando a la base de datos
             client = await db.connect(uri, dbopt)
-            config_db = client.db("maternidadSotero").collection('user')
+            config_db = client.db("maternidadSotero").collection('usuario')
           //  bot_db = client.db("WhatsappWeb").collection('WhatsappBots')
             user_login = await config_db.findOne({ nombre: user.usr })
             
@@ -35,10 +34,9 @@ module.exports = (api, db, uri, dbopt, rqt) => {
                     if (update.result.nModified == 1 && update.result.ok == 1) {
                         const accessToken = jsonwebtoken.sign(
                             {
-                                name: 'Usuario: ' + user_login.name,
+                                name: user_login.name,
                                 id: user_login._id,
                                 picture: user_login.picture,
-                                email: user_login.email,
                                 filter: user_login._id,
                             },
                             'dummy'
