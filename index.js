@@ -33,33 +33,33 @@ app.use((req, res, next) => {
 
 const middleware = jwt({secret: 'dummy'}).unless({path:['/api/auth', '/images']})
 
-app.use(middleware)
-app.use(function (err, req, res, next) {
-  console.log('Funcion middleware')
+// app.use(middleware)
+// app.use(function (err, req, res, next) {
+//   console.log('Funcion middleware')
 
-  const authHeader = req.headers.authorization
+//   const authHeader = req.headers.authorization
 
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    console.log('jwt',jwt)
-    next();
-    jwt.verify(token, 'dummy', (err, user) => {
-       if (err) {
-           return res.sendStatus(403);
-       }
+//   if (authHeader) {
+//     const token = authHeader.split(' ')[1];
+//     console.log('jwt',jwt)
+//     next();
+//     jwt.verify(token, 'dummy', (err, user) => {
+//        if (err) {
+//            return res.sendStatus(403);
+//        }
 
-       req.user = user;
-       next();
-    });
-  } else {
-      res.sendStatus(401);
-  }
-});
+//        req.user = user;
+//        next();
+//     });
+//   } else {
+//       res.sendStatus(401);
+//   }
+// });
 
 api = express.Router()
 
 require('./routes/sotero_back/index')( api, db, uri, dbopt, rqt)
-app.use('/api', api)
+app.use('/Router', api)
 
 
 server.listen(3000, ()=>{
@@ -67,8 +67,10 @@ server.listen(3000, ()=>{
     if(error){
       throw error;
     }
+    // console.log(api)
     console.log("Estoy conectadisisisiismo")
     console.log("Y bueno... vamos a juga")
+    // console.log("Conectado en:",)
     database = client.db("maternidadSotero")
 
   })
