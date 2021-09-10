@@ -1187,7 +1187,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.json(documents);
     });
 
-    api.get('/Obtener', async function(req, res){
+    api.get('/ObtenerRegion', async function(req, res){
       console.log("Obteniendo regiones")
       // Si no existen ambos datos se toma un find empthy de datos dentro
       try {
