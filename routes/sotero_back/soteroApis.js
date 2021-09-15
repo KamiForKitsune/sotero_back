@@ -1363,5 +1363,87 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.json(documents);
     });    
 
+
+    api.get('/ObtenerDataFichaA', async function(req, res){
+      console.log("Obteniendo datos preeliminares Ficha A")
+      // Si no existen ambos datos se toma un find empthy de datos dentro
+      try {
+        //  Al abrirse la ficha A, se deberia obtener:
+        // Region, Prevision, Estudios, Estaado Civil, Ocupacion,
+        //  grupo sanguineo(for both cbox),patologias (familiar, medica y quirurgica)
+        // Drogas, Anticoncepcion
+        var allData= [];
+        
+        regiones = database.collection("region");
+        
+        var region = await regiones
+          .find()
+          .toArray();
+        allData.push(region)
+        previsiones = database.collection("prevision");
+        
+        var prevision = await previsiones
+          .find()
+          .toArray();
+        allData.push(prevision)
+        estudios = database.collection("estudio");
+          
+        var estudio = await estudios
+          .find()
+          .toArray();
+        allData.push(estudio)
+        estadosCiviles = database.collection("estadoCivil");
+        
+        var estadoCivil = await estadosCiviles
+          .find()
+          .toArray();
+        allData.push(estadoCivil)
+        actividades = database.collection("actividad");
+        var actividad = await actividades
+          .find()
+          .toArray();
+        allData.push(actividad)
+        gruposSanguineos = database.collection("grupoSanguineo");
+        
+        var gruposSanguineo = await gruposSanguineos
+          .find()
+          .toArray();
+        allData.push(gruposSanguineo)
+        patologias = database.collection("patologia");
+    
+        var patologia = await patologias
+          .find()
+          .toArray();
+        allData.push(patologia)
+
+        tiposPatologias = database.collection("tipoPatologia");
+    
+        var tipoPatologia = await tiposPatologias
+          .find()
+          .toArray();
+        allData.push(tipoPatologia)
+
+        drogas = database.collection("droga");
+        var droga = await drogas
+          .find()
+          .toArray();
+        allData.push(droga)
+        anticonceptivo = database.collection("anticonceptivo");
+        var anticonceptivos = await anticonceptivo
+          .find()
+          .toArray();
+        allData.push(anticonceptivos)
+
+      } catch (error) {
+        console.log(error);
+      }
+
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Content-Type", "application/x-www-form-urlencoded");
+    res.setHeader("Accept", "application/json");
+    res.json(allData);
+    });    
+
     
 }
