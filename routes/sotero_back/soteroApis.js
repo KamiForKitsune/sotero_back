@@ -1445,5 +1445,78 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.json(allData);
     });    
 
+    //ficha B
+
+    api.get('/ObtenerDataFichaB', async function(req, res){
+      console.log("Obteniendo tono Uterino")
+      // Si no existen ambos datos se toma un find empthy de datos dentro
+      try {       
+
+        var todo = [];
+
+        patologias = database.collection("patologia");  
+        var patologia = await patologias
+          .find()
+          .toArray();
+        todo.push(patologia);
+
+        tonoUterinoColeccion = database.collection("tonoUterino")
+        var tonoUterinos = await tonoUterinoColeccion
+          .find()
+          .toArray();        
+        todo.push(tonoUterinos);
+
+        tiposPatologias = database.collection("tipoPatologia");
+        var tipoPatologia = await tiposPatologias
+          .find()
+          .toArray();
+        todo.push(tipoPatologia);       
+
+        latidosCardioFetales = database.collection("latidosCardiofetal");  
+        var latidosCardiofetal = await latidosCardioFetales
+          .find()
+          .toArray();
+        todo.push(latidosCardiofetal);
+
+        membranas = database.collection("membrana");  
+        var membrana = await membranas
+          .find()
+          .toArray();
+        todo.push(membrana);
+
+        perdidasVaginales = database.collection("perdidaVaginal");  
+        var perdidaVaginal = await perdidasVaginales
+          .find()
+          .toArray();
+        todo.push(perdidaVaginal);
+
+        tipoLiqAmnioticos = database.collection("tipoLiqAmniotico");  
+        var tipoLiqAmniotico = await tipoLiqAmnioticos
+          .find()
+          .toArray();
+        todo.push(tipoLiqAmniotico);
+
+        leucorreas = database.collection("leucorrea");  
+        var leucorrea = await leucorreas
+          .find()
+          .toArray();
+        todo.push(leucorrea);
+
+        presentacionFetos = database.collection("presentacionFeto");  
+        var presentacionFeto = await presentacionFetos
+          .find()
+          .toArray();
+        todo.push(presentacionFeto);        
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Content-Type", "application/x-www-form-urlencoded");
+    res.setHeader("Accept", "application/json");
+    res.json(todo);
+    });
+
     
 }
