@@ -37,7 +37,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.json(anticonceptivos);
     });
     // Listar comunas por region
-    api.get('/ObtenerComunas', async function(req, res){
+    api.post('/ObtenerComunas', async function(req, res){
       try {
         console.log("Obteniendo comunas")
         // console.log(req.body)
@@ -202,7 +202,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
 
       console.log("Obteniendo Drogas")
       try {
-        droga = database.collection("drogas");
+        droga = database.collection("droga");
         var drogas = await droga
           .find()
           .toArray();

@@ -35,10 +35,14 @@ const middleware = jwt({secret: 'dummy'}).unless({path:['/Router/login', '/image
 
 app.use(middleware)
 app.use(function (err, req, res, next) {
-  console.log('Funcion middleware')
+  console.log("Es hora de la request");
+
+  console.log(req.headers)
 
   const authHeader = req.headers.authorization
+  // console.log("============== :3 ========")
 
+  console.log(req)
   if (authHeader) {
     const token = authHeader.split(' ')[1];
     console.log('jwt',jwt)
