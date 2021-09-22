@@ -1531,7 +1531,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.setHeader("Accept", "application/json");
     res.json(todo);
     });
-    api.get('/ObtenerPacienteFichaA', async function(req, res){
+    api.post('/ObtenerPacienteFichaA', async function(req, res){
       console.log("Obteniendo Paciente ",req.body.rut)
       // Si no existen ambos datos se toma un find empthy de datos dentro
       try {
@@ -1549,7 +1549,14 @@ module.exports= (api, db, uri, dbopt, rqt) => {
         // Se debe mostrar si hubo una cesaria previa y si tuvo embarazos gemelares(junto con el recien nacido de mayor peso)
         pacienteAllData  =[]
         pacienteData = database.collection("paciente")
-        var paciente = await pacienteData.find().toArray();
+        var paciente = await pacienteData.aggregate([
+          {
+            $match: {
+              rut:rut,
+            },
+          }
+        ])
+        .toArray();
         if (paciente === null){
 
           res.json("Paciente no encontrado")
