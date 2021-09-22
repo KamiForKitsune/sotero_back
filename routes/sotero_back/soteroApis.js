@@ -1454,7 +1454,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     //ficha B
 
     api.get('/ObtenerDataFichaB', async function(req, res){
-      console.log("Obteniendo tono Uterino")
+      console.log("Obteniendo Datos de la ficha B")
       // Si no existen ambos datos se toma un find empthy de datos dentro
       try {       
 
@@ -1532,6 +1532,59 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.setHeader("Accept", "application/json");
     res.json(todo);
     });
+    api.get('/ObtenerPacienteFichaA', async function(req, res){
+      console.log("Obteniendo Paciente ",req.body.rut)
+      // Si no existen ambos datos se toma un find empthy de datos dentro
+      try {
+        rut = req.body.rut;
+        // Se debe obtener paciente, comuna en la cual se encuentra
+        // Prevision en la cual esta, asi mismo estudios, estado civil y ocupación
+        // Grupo sanguineo de la madre y del conyuge
+        // Peso y estatura No estaran dentro de los datos, debido a que es un dato que el usuario debe poner ya que con la ficha se estaria cteando un nuevo embarazo
+        // Debemos obtener patologias familiar y propias del paciente
+        // Medicamentos cronicos No estaran dentro de los datos debido a que depende de la actualidad de sus medicamentocronicos y el listado de medicamentos que toma regularmente
+        // Drogas que consumio el paciente anteriormente
+        // Embarazos previos | => Todos los embarazos, junto con el tipo de embarazos y el numero de embarazos de ese tipo
+        // En caso de ser partos de termino y partos prematuros (Osea, nacieron)
+        // se debe marcar cual es el recien nacido de mayor peso
+        // Se debe mostrar si hubo una cesaria previa y si tuvo embarazos gemelares(junto con el recien nacido de mayor peso)
+        pacienteAllData  =[]
+        pacienteData = database.collection("paciente")
+        var paciente = await pacienteData.find().toArray();
+        if (paciente === null){
+
+          res.json("Paciente no encontrado")
+        } 
+        pacienteData.push(paciente)
+
+        embarazosPaciente = database.collection("embarazo")
+
+        var embarazo = await embarazosPaciente
+            .aggregate([
+              {
+                $match: {
+                  idRegion: paciente._id,
+                },
+              }
+            ])
+            .toArray();
+
+        pacienteAllData.push(embarazo)
+
+
+
+       
+
+      } catch (error) {
+        console.log(error);
+      }
+
+
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Content-Type", "application/x-www-form-urlencoded");
+    res.setHeader("Accept", "application/json");
+    res.json(pacienteAllData);
+    });   
 
     
 }
