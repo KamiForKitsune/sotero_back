@@ -1482,13 +1482,7 @@ module.exports= (api, db, uri, dbopt, rqt) => {
         var tonoUterinos = await tonoUterinoColeccion
           .find()
           .toArray();        
-        todo.push(tonoUterinos);
-
-        tiposPatologias = database.collection("tipoPatologia");
-        var tipoPatologia = await tiposPatologias
-          .find()
-          .toArray();
-        todo.push(tipoPatologia);             
+        todo.push(tonoUterinos);                    
 
         membranas = database.collection("membrana");  
         var membrana = await membranas
@@ -1498,6 +1492,11 @@ module.exports= (api, db, uri, dbopt, rqt) => {
 
 //----------------
 
+        tiposPatologias = database.collection("tipoPatologia");
+        var tipoPatologia = await tiposPatologias
+          .find()
+          .toArray();
+        todo.push(tipoPatologia);
 
         perdidasVaginales = database.collection("perdidaVaginal");  
         var perdidaVaginal = await perdidasVaginales
