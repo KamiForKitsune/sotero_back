@@ -1460,6 +1460,18 @@ module.exports= (api, db, uri, dbopt, rqt) => {
           .toArray();
         todo.push(patologia);
 
+        movFetales = database.collection("movimientoFetal")
+        var movFetal = await movFetales
+          .find()
+          .toArray();        
+        todo.push(movFetal);
+
+        latidosCardioFetales = database.collection("latidoCardiofetal");  
+        var latidoCardiofetal = await latidosCardioFetales
+          .find()
+          .toArray();
+        todo.push(latidoCardiofetal);
+
         tonoUterinoColeccion = database.collection("tonoUterino")
         var tonoUterinos = await tonoUterinoColeccion
           .find()
@@ -1470,19 +1482,16 @@ module.exports= (api, db, uri, dbopt, rqt) => {
         var tipoPatologia = await tiposPatologias
           .find()
           .toArray();
-        todo.push(tipoPatologia);       
-
-        latidosCardioFetales = database.collection("latidosCardiofetal");  
-        var latidosCardiofetal = await latidosCardioFetales
-          .find()
-          .toArray();
-        todo.push(latidosCardiofetal);
+        todo.push(tipoPatologia);             
 
         membranas = database.collection("membrana");  
         var membrana = await membranas
           .find()
           .toArray();
         todo.push(membrana);
+
+//----------------
+
 
         perdidasVaginales = database.collection("perdidaVaginal");  
         var perdidaVaginal = await perdidasVaginales
