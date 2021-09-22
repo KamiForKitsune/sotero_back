@@ -1434,6 +1434,12 @@ module.exports= (api, db, uri, dbopt, rqt) => {
           .toArray();
         allData.push(anticonceptivos)
 
+        medicamentos = database.collection("medicamento")
+        var medicamento = await medicamentos
+          .find()
+          .toArray();
+        allData.push(medicamento)
+
       } catch (error) {
         console.log(error);
       }
@@ -1443,8 +1449,8 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.setHeader("Content-Type", "application/x-www-form-urlencoded");
     res.setHeader("Accept", "application/json");
     res.json(allData);
-    });    
-
+    }); 
+    
     //ficha B
 
     api.get('/ObtenerDataFichaB', async function(req, res){
