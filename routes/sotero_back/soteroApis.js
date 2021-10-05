@@ -1532,10 +1532,12 @@ module.exports= (api, db, uri, dbopt, rqt) => {
     res.json(todo);
     });
     api.post('/ObtenerPacienteFichaA', async function(req, res){
-      console.log("Obteniendo Paciente ",req.body.rut)
+      console.log("Obteniendo Paciente"+req.body.rut)
+      
       // Si no existen ambos datos se toma un find empthy de datos dentro
       try {
         rut = req.body.rut;
+        rut =parseInt(rut);
         // Se debe obtener paciente, comuna en la cual se encuentra
         // Prevision en la cual esta, asi mismo estudios, estado civil y ocupación
         // Grupo sanguineo de la madre y del conyuge
@@ -1552,29 +1554,29 @@ module.exports= (api, db, uri, dbopt, rqt) => {
         var paciente = await pacienteData.aggregate([
           {
             $match: {
-              rut:rut,
+              rut: rut,
             },
           }
         ])
         .toArray();
-        if (paciente === null){
+        if (paciente === undefined){
 
-          res.json("Paciente no encontrado")
+          console.log("paciente no encontrado")
         } 
-        pacienteData.push(paciente)
+        // console.log(paciente)
+        pacienteAllData.push(paciente)
 
         embarazosPaciente = database.collection("embarazo")
-
-        var embarazo = await embarazosPaciente
-            .aggregate([
+        idPaciente= ''+paciente[0]._id
+        var embarazo = await embarazosPaciente.aggregate([
               {
                 $match: {
-                  idRegion: paciente._id,
+                  idPaciente: idPaciente,
                 },
               }
             ])
             .toArray();
-
+        // console.log(embarazo)
         pacienteAllData.push(embarazo)
 
 
